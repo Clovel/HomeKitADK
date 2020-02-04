@@ -219,11 +219,20 @@ void HandleUpdatedState(HAPAccessoryServerRef* _Nonnull server, void* _Nullable 
 #if IP
 static void InitializeIP() {
     // Prepare accessory server storage.
+
+    /* Set up the IP sessions the app will handle */
     static HAPIPSession ipSessions[kHAPIPSessionStorage_DefaultNumElements];
+
+    /* Setup Inbound buffers for each IP session */
     static uint8_t ipInboundBuffers[HAPArrayCount(ipSessions)][kHAPIPSession_DefaultInboundBufferSize];
+
+    /* Setup Outbound buffers for each IP session */
     static uint8_t ipOutboundBuffers[HAPArrayCount(ipSessions)][kHAPIPSession_DefaultOutboundBufferSize];
+
+    /* Set up service event notification array for each IP session */
     static HAPIPEventNotificationRef ipEventNotifications[HAPArrayCount(ipSessions)][kAttributeCount];
-    for (size_t i = 0; i < HAPArrayCount(ipSessions); i++) {
+    
+    for (size_t i = 0U; i < HAPArrayCount(ipSessions); i++) {
         ipSessions[i].inboundBuffer.bytes = ipInboundBuffers[i];
         ipSessions[i].inboundBuffer.numBytes = sizeof ipInboundBuffers[i];
         ipSessions[i].outboundBuffer.bytes = ipOutboundBuffers[i];
